@@ -1,0 +1,62 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hashify</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+</head>
+
+<body translate="no">
+    <div class="text-center text-blue">MD5 Hash Generator</div>
+    <div id="app" class="flex flex-col gap-2  p-4"><input type="text" placeholder="Type here..."
+            class="px-3 py-2 bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 ">
+        <input type="text" placeholder="MD5 Hash..."
+            class="px-3 py-2 bg-white border shadow-sm border-gray-300 placeholder-gray-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+        <div><button class="w-max shadow border border-1 px-2 py-1 focus:bg-gray-200">Hash it</button> <button
+                class="w-max shadow border border-1 px-2 py-1 focus:bg-gray-200">Copy Hash</button> <span></span></div>
+        <div class="flex flex-col bg-yellow-100 border-yellow-200 border-1 p-4 rounded"><span>Options</span>
+            <div class="grid grid-cols-2 gap-2 p-2 "><span>Auto Hash</span> <input type="checkbox"> <span>Auto
+                    Copy</span> <input type="checkbox"></div>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data:
+            {
+                plain_text: "",
+                md5: "",
+                auto_hash: true,
+                auto_copy: true,
+                msg: ""
+            },
+
+            methods:
+            {
+                handle_keypress_input: function () {
+                    if (this.auto_hash)
+                        this.hashit();
+                    if (this.auto_copy)
+                        this.copyit();
+
+
+                },
+                hashit: function () {
+                    this.md5 = CryptoJS.MD5(this.plain_text).toString();
+                    this.msg = "";
+                },
+                copyit: function () {
+                    navigator.clipboard.writeText(this.md5);
+                    this.msg = "Hash Copied to Clipboard";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
